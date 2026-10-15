@@ -13,6 +13,9 @@ public class WalkerController : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.15f;
     [SerializeField] private LayerMask groundLayer;
 
+    [SerializeField] private float coyoteTime = 0.1f;
+    private float coyoteTimer;
+
     private InputAction jumpAction;
     private bool jumpRequested;
 
@@ -56,12 +59,23 @@ public class WalkerController : MonoBehaviour
         
         isGrounded = Physics2D.OverlapCircle(
             groundCheck.position, groundCheckRadius, groundLayer) != null;
+
+        if (isGrounded) coyoteTimer = coyoteTime;
+        else coyoteTimer -= Time.fixedDeltaTime;
+
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+
+        if (jumpRequested && coyoteTimer > 0f)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpVelocity);
+            coyoteTimer = 0f;   // a granted jump spends the whole window
+        }
 
         if (jumpRequested && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpVelocity);
         }
+
 
         if (jumpCutRequested && rb.linearVelocity.y > 0f)
         {
