@@ -1045,7 +1045,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1145,7 +1145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8100bef410220c4196fa30dedbec55b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WalkerController
-  jumpVelocity: 15
+  jumpVelocity: 16.6
   groundCheck: {fileID: 1528108239}
   groundCheckRadius: 0.15
   groundLayer:
