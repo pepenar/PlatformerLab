@@ -14,6 +14,11 @@ public class WalkerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [SerializeField] private float coyoteTime = 0.1f;
+
+    private static readonly int SpeedHash = Animator.StringToHash("speed");
+    private static readonly int GroundedHash = Animator.StringToHash("isGrounded");
+
+    private Animator animator;
     private float coyoteTimer;
 
     private InputAction jumpAction;
@@ -28,6 +33,7 @@ public class WalkerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
 
@@ -52,6 +58,9 @@ public class WalkerController : MonoBehaviour
         {
             jumpCutRequested = true;
         }
+
+        animator.SetFloat(SpeedHash, Mathf.Abs(rb.linearVelocity.x));
+        animator.SetBool(GroundedHash, isGrounded);
     }
 
     void FixedUpdate()
